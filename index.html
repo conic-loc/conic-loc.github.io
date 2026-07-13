@@ -137,14 +137,14 @@
         <h2 class="title is-2">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-           We present </strong>ConicLoc, a map-free monocular visual localization (VL)</strong> that leverages time-invariant conic geometric primitives in structured environments to estimate six degrees of freedom (DoF) camera poses.
-Existing VL approaches depend on handcrafted keypoints, semantic cues, or pre-built maps, making them vulnerable to illumination changes, occlusions, and frequent environmental reconfigurations. 
-To overcome these limitations, we exploit </strong>time-invariant conic geometry and Manhattan world (MW) regularities</strong> that naturally arise in human-made environments.
-We first propose a </strong>Perspective-Two-Circle (P2C) </strong>that leverages the known radii of two circular structures to recover an initial camera pose without requiring depth measurements or prior maps.
-Given the conic normals from P2C, we infer dominant Manhattan directions and achieve </strong>drift-free orientation estimation by integrating MW-aligned lines. </strong>
-We further refine camera poses through a novel</strong> conic bundle adjustment (CBA) with algebraic conic residuals.</strong>
-We evaluate the proposed method on </strong>synthetic and real-world datasets</strong>, including free-flying robot sequences on the International Space Station (ISS).
-Despite operating in a fully map-free monocular setup, the localization accuracy of the proposed ConicLoc is comparable to existing map-based VL methods, demonstrating that ConicLoc enables reliable global localization even in highly complex and challenging environments without relying on pre-built maps.
+           We present ConicLoc, a monocular visual localization (VL) that leverages time-invariant, known-radius circular landmarks in structured environments to estimate six-DoF camera poses without a pre-built map.
+Existing map-based VL methods depend on handcrafted keypoints, semantic cues, or pre-built maps, making them vulnerable to illumination/appearance changes and frequent environmental reconfigurations.
+ConicLoc exploits circular structures' known radii as a compact metric prior together with Manhattan world (MW) regularities, requiring no depth sensing, learned descriptors, or a pre-built map.
+We first propose a Perspective-Two-Circle (P2C) solver that recovers a metric-scale initial pose from two detected ellipses with known radii.
+From P2C's conic normals, we infer dominant MW directions and integrate MW-aligned lines for drift-free orientation and low sensitivity to image noise.
+All poses are further refined via a conic bundle adjustment (CBA) minimizing algebraic conic residuals for global consistency.
+We evaluate ConicLoc on synthetic and real-world environments, including ISS free-flying robot sequences and nano-drone sequences under day-night illumination change.
+Without a pre-built map, ConicLoc achieves accuracy comparable to map-based VL methods while maintaining performance across severe illumination changes.
            </p>
         </div>
       </div>
