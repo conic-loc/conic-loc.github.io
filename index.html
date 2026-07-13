@@ -3,13 +3,13 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="ConicLoc: Map-Free Monocular Localization via Perspective-Two-Circle for Free-Flying Robots">
-  <meta name="keywords" content="Space Robotics, Astrobee, ISS, Digital Twin, 3-DoF Visual Compass, Rotation Estimation, ">
+  <meta name="description" content="ConicLoc: Geometry-Driven Monocular Localization via Perspective-Two-Circle with Structural Conic Priors. A map-free, illumination-robust 6-DoF visual localization method for free-flying robots and structured environments.">
+  <meta name="keywords" content="Space Robotics, Astrobee, ISS, Visual Localization, Perspective-Two-Circle, Manhattan World, Conic Bundle Adjustment, Map-free Localization, Crazyflie">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ConicLoc:  <br> Geometry-Driven Monocular Localization  <br> via Perspective-Two-Circle with Structural Conic Priors</title>
+  <title>ConicLoc: Geometry-Driven Monocular Localization via Perspective-Two-Circle with Structural Conic Priors</title>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src=""></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LYK5B1RWXZ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -18,6 +18,8 @@
     gtag('config', 'G-LYK5B1RWXZ');
   </script>
 
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='34' cy='50' r='26' fill='none' stroke='%23222' stroke-width='9'/%3E%3Ccircle cx='66' cy='50' r='26' fill='none' stroke='%23222' stroke-width='9'/%3E%3C/svg%3E">
+
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
@@ -25,34 +27,61 @@
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/thumbnail.png">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
   <style>
     .no-wrap {
-    white-space: nowrap; /* Prevents wrapping for the second line */
+      white-space: nowrap;
     }
     .publication-title {
-      max-width: 1200px; /* 타이틀의 최대 가로 폭을 설정 */
-      font-size: 2.5rem; /* 글자 크기 조정 */
-      margin: 0 auto; /* 가운데 정렬 */
-      line-height: 1.2; /* 줄 간격 설정 */
+      max-width: 1200px;
+      font-size: 2.5rem;
+      margin: 0 auto;
+      line-height: 1.25;
     }
-  </style>
-  <style>
+    .under-review-badge {
+      display: inline-block;
+      margin-top: 0.75rem;
+      padding: 0.25rem 0.9rem;
+      border-radius: 999px;
+      background: #f5f5f5;
+      color: #555;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+    }
+
+    /* Disabled / not-yet-available link buttons */
+    .link-block a.is-coming-soon {
+      position: relative;
+      pointer-events: none;
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    .link-block a.is-coming-soon .coming-soon-tag {
+      position: absolute;
+      bottom: -1.3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.65rem;
+      color: #999;
+      white-space: nowrap;
+    }
+    .link-block { position: relative; }
+
     .video-container {
       position: relative;
-      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      padding-bottom: 56.25%;
       height: 0;
       overflow: hidden;
       max-width: 100%;
       background: #000;
+      border-radius: 8px;
     }
-
     .video-container iframe {
       position: absolute;
       top: 0;
@@ -60,10 +89,257 @@
       width: 100%;
       height: 100%;
     }
+
+    /* Headline stat strip */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .stat-card {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 1.25rem 1rem;
+      text-align: center;
+    }
+    .stat-card .stat-number {
+      display: block;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #222;
+    }
+    .stat-card .stat-label {
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    /* Contribution cards */
+    .contrib-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+    .contrib-card {
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 1.25rem 1.25rem;
+      background: #fff;
+    }
+    .contrib-card .contrib-index {
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 700;
+      color: #bbb;
+      font-size: 1.5rem;
+      line-height: 1;
+    }
+
+    /* Method stage list */
+    .stage-list {
+      counter-reset: stage-counter;
+      margin-top: 1rem;
+    }
+    .stage-item {
+      position: relative;
+      padding-left: 3rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    .stage-item:before {
+      counter-increment: stage-counter;
+      content: counter(stage-counter);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: #222;
+      color: #fff;
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .stage-item h4 {
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    /* Result tables */
+    .table-scroll {
+      overflow-x: auto;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+    .table-scroll table {
+      min-width: 720px;
+    }
+    tr.ours-row {
+      background: #eef6ff !important;
+      font-weight: 700;
+    }
+    .table-note {
+      font-size: 0.85rem;
+      color: #777;
+      text-align: left;
+    }
+
+    .section-divider {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 0;
+    }
+
+    /* Sticky sub-navigation */
+    .site-subnav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid #eee;
+      transform: translateY(-100%);
+      transition: transform 0.25s ease;
+    }
+    .site-subnav.is-visible {
+      transform: translateY(0);
+    }
+    .site-subnav-inner {
+      display: flex;
+      justify-content: center;
+      gap: 0.25rem;
+      padding: 0.6rem 1rem;
+      overflow-x: auto;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .site-subnav a {
+      flex: none;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #444;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .site-subnav a:hover {
+      background: #f0f0f0;
+    }
+    .site-subnav a.is-active {
+      background: #222;
+      color: #fff;
+    }
+
+    /* Interactive pipeline flow diagram */
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+    .flow-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 130px;
+      min-height: 110px;
+      padding: 0.75rem 0.5rem;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      background: #fff;
+      text-align: center;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    }
+    .flow-node.flow-endpoint {
+      background: #fafafa;
+      border-style: dashed;
+      color: #888;
+    }
+    .flow-node.flow-stage {
+      cursor: pointer;
+    }
+    .flow-node.flow-stage:hover {
+      border-color: #222;
+      transform: translateY(-2px);
+    }
+    .flow-node.flow-stage.is-active {
+      background: #222;
+      border-color: #222;
+      color: #fff;
+    }
+    .flow-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .flow-label {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+    .flow-arrow {
+      font-size: 1.4rem;
+      color: #ccc;
+      flex: none;
+    }
+    .flow-detail-panel {
+      margin: 1.5rem auto 0;
+      max-width: 760px;
+      min-height: 96px;
+      padding: 1.25rem 1.5rem;
+      background: #f7f7f7;
+      border-radius: 10px;
+      text-align: left;
+    }
+    .flow-detail-panel h4 {
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .flow-detail-panel p {
+      margin: 0;
+      color: #444;
+    }
+    @media (max-width: 768px) {
+      .flow-diagram {
+        flex-direction: column;
+      }
+      .flow-arrow {
+        transform: rotate(90deg);
+      }
+    }
   </style>
 </head>
 
 <body>
+
+<nav class="site-subnav" id="site-subnav">
+  <div class="site-subnav-inner">
+    <a href="#Abstract">Abstract</a>
+    <a href="#Contributions">Contributions</a>
+    <a href="#Method">Method</a>
+    <a href="#Datasets">Datasets</a>
+    <a href="#Results">Results</a>
+    <a href="#Limitations">Limitations</a>
+    <a href="#BibTeX">BibTeX</a>
+  </div>
+</nav>
 
 <section class="hero">
   <div class="hero-body">
@@ -71,53 +347,55 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title">
-              ConicLoc: Geometry-Driven Monocular Localization <br> via Perspective-Two-Circle with Structural Conic Priors
+              ConicLoc: <br> Geometry-Driven Monocular Localization <br> via Perspective-Two-Circle with Structural Conic Priors
           </h1>
 
           <div class="is-size-4 publication-authors">
-            <span class="author-block">RA-L </span>
+            <span class="author-block">IEEE Robotics and Automation Letters (RA-L)</span>
           </div>
 
-          <div class="is-size-4 publication-authors">
-            <span class="author-block">Anonymous<sup>1*</sup>,</span>
-
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Anonymous Author(s)</span>
           </div>
 
-          <div class="is-size-5 publication-affiliations">
-
+          <div class="is-size-6 publication-affiliations">
+            <span class="under-review-badge">Under double-blind review &mdash; details withheld to preserve anonymity</span>
           </div>
 
           <div class="column has-text-centered">
             <div class="publication-links">
               <!-- PDF Link. -->
               <span class="link-block">
-                <a href="./static/paper2.pdf"
-                   class="external-link button is-normal is-rounded is-dark">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark is-coming-soon">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
                   </span>
                   <span>Paper</span>
                 </a>
+                <span class="coming-soon-tag">coming soon</span>
               </span>
               <!-- Video Link. -->
               <span class="link-block">
                 <a href=""
-                   class="external-link button is-normal is-rounded is-dark">
+                   class="external-link button is-normal is-rounded is-dark is-coming-soon">
                   <span class="icon">
                     <i class="fab fa-youtube"></i>
                   </span>
                   <span>Video</span>
                 </a>
+                <span class="coming-soon-tag">coming soon</span>
               </span>
               <!-- Code Link. -->
               <span class="link-block">
                 <a href=""
-                   class="external-link button is-normal is-rounded is-dark">
+                   class="external-link button is-normal is-rounded is-dark is-coming-soon">
                   <span class="icon">
                       <i class="fab fa-github"></i>
                   </span>
                   <span>Code </span>
                 </a>
+                <span class="coming-soon-tag">coming soon</span>
               </span>
             </div>
           </div>
@@ -127,9 +405,30 @@
   </div>
 </section>
 
+<section class="section" style="padding-top: 0;">
+  <div class="container is-max-desktop">
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="stat-number">16&ndash;18 bytes</span>
+        <span class="stat-label">geometric prior per scene, vs. hundreds of MB&ndash;GB maps/models for map-based baselines</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">0 min</span>
+        <span class="stat-label">map building or training &mdash; no SfM reconstruction, no GPU training stage</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">0.295 m / 4.30&deg;</span>
+        <span class="stat-label">translation / rotation error at night on Crazyflie, while appearance-based baselines collapse</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number">~81&ndash;88 ms/frame</span>
+        <span class="stat-label">fastest runtime among all compared methods, with no GPU required at inference</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-
-<section class="section">
+<section class="section" id="Abstract">
   <div class="container is-max-desktop">
     <!-- Abstract. -->
     <div class="columns is-centered has-text-centered">
@@ -137,102 +436,221 @@
         <h2 class="title is-2">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-           We present ConicLoc, a monocular visual localization (VL) that leverages time-invariant, known-radius circular landmarks in structured environments to estimate six-DoF camera poses without a pre-built map.
-Existing map-based VL methods depend on handcrafted keypoints, semantic cues, or pre-built maps, making them vulnerable to illumination/appearance changes and frequent environmental reconfigurations.
-ConicLoc exploits circular structures' known radii as a compact metric prior together with Manhattan world (MW) regularities, requiring no depth sensing, learned descriptors, or a pre-built map.
-We first propose a Perspective-Two-Circle (P2C) solver that recovers a metric-scale initial pose from two detected ellipses with known radii.
-From P2C's conic normals, we infer dominant MW directions and integrate MW-aligned lines for drift-free orientation and low sensitivity to image noise.
-All poses are further refined via a conic bundle adjustment (CBA) minimizing algebraic conic residuals for global consistency.
-We evaluate ConicLoc on synthetic and real-world environments, including ISS free-flying robot sequences and nano-drone sequences under day-night illumination change.
-Without a pre-built map, ConicLoc achieves accuracy comparable to map-based VL methods while maintaining performance across severe illumination changes.
-           </p>
+            We present ConicLoc, a monocular visual localization (VL) method that leverages time-invariant, known-radius
+            circular landmarks in structured environments to estimate six-DoF camera poses without a pre-built map.
+            Existing map-based VL methods depend on handcrafted keypoints, semantic cues, or pre-built maps, making them
+            vulnerable to illumination/appearance changes and frequent environmental reconfigurations. ConicLoc exploits
+            circular structures' known radii as a compact metric prior together with Manhattan world (MW) regularities,
+            requiring no depth sensing, learned descriptors, or a pre-built map. We first propose a Perspective-Two-Circle
+            (P2C) solver that recovers a metric-scale initial pose from two detected ellipses with known radii. From P2C's
+            conic normals, we infer dominant MW directions and integrate MW-aligned lines for drift-free orientation and
+            low sensitivity to image noise. All poses are further refined via a conic bundle adjustment (CBA) minimizing
+            algebraic conic residuals for global consistency. We evaluate ConicLoc on synthetic and real-world environments,
+            including ISS free-flying robot sequences and nano-drone sequences under day&ndash;night illumination change.
+            Without a pre-built map, ConicLoc achieves accuracy comparable to map-based VL methods while maintaining
+            performance across severe illumination changes.
+          </p>
         </div>
       </div>
     </div>
     <!--/ Abstract. -->
+  </div>
+</section>
 
+<hr class="section-divider">
 
+<!-- ===================== Contributions Section ===================== -->
+<section class="section" id="Contributions">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-2">Contributions</h2>
+      </div>
+    </div>
+    <div class="contrib-grid">
+      <div class="contrib-card">
+        <div class="contrib-index">01</div>
+        <p>We fully exploit structural conic geometry with a closed-form <strong>Perspective&ndash;Two&ndash;Circle (P2C)</strong>
+        solver and a <strong>conic bundle adjustment (CBA)</strong> that globally optimizes algebraic ellipse residuals.</p>
+      </div>
+      <div class="contrib-card">
+        <div class="contrib-index">02</div>
+        <p>We identify and alleviate the noise sensitivity of monocular conic pose estimation by integrating
+        <strong>Manhattan world (MW)</strong> constraints, and demonstrate its effectiveness through synthetic experiments.</p>
+      </div>
+      <div class="contrib-card">
+        <div class="contrib-index">03</div>
+        <p>We evaluate ConicLoc across two robotic platforms &mdash; an ISS free-flying robot (Astrobee) and a
+        nano-drone (Crazyflie) &mdash; under day and night conditions, achieving accuracy comparable to map-based VL
+        methods while remaining robust to illumination change.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
+<hr class="section-divider">
 
-<!-- ===================== ConicLoc Results Section ===================== -->
-<section class="section">
+<!-- ===================== Method / Pipeline Section ===================== -->
+<section class="section" id="Method">
   <div class="container is-max-desktop">
 
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-2">ConicLoc Results</h2>
-
+        <h2 class="title is-2">Method Overview</h2>
         <div class="content has-text-justified">
           <p>
-            We evaluate <strong>ConicLoc</strong> on real Astrobee sequences and synthetic data.
-            Our method achieves accurate 6-DoF localization using 
-            <strong>two circular structures</strong> (hatch and window) 
-            together with <strong>Manhattan World line constraints</strong>.
+            ConicLoc estimates 6-DoF camera pose using <strong>two circular structures</strong> (e.g., a hatch and a window)
+            together with <strong>Manhattan world line constraints</strong>, requiring only the circles' known physical radii
+            and no pre-built map. Click a stage below to see how it works.
           </p>
-
         </div>
       </div>
     </div>
 
-    <!-- Optional Result Video -->
     <div class="columns is-centered">
-      <div class="column is-full has-text-centered">
+      <div class="column is-full">
 
-        <video autoplay muted loop playsinline 
-               style="max-width: 100%; height: auto;">
-          <source src="./static/astrobee.mp4" type="video/mp4">
-        </video>
+        <div class="flow-diagram" id="flow-diagram">
+          <div class="flow-node flow-endpoint">
+            <div class="flow-icon">&#128247;</div>
+            <div class="flow-label">Monocular<br>Image</div>
+          </div>
+          <div class="flow-arrow">&#10230;</div>
+          <div class="flow-node flow-stage is-active" data-stage="1">
+            <div class="flow-icon">&#9678;</div>
+            <div class="flow-label">Ellipse &amp; Line<br>Extraction</div>
+          </div>
+          <div class="flow-arrow">&#10230;</div>
+          <div class="flow-node flow-stage" data-stage="2">
+            <div class="flow-icon">&#8857;&#8857;</div>
+            <div class="flow-label">P2C Solver +<br>MW Line Optimization</div>
+          </div>
+          <div class="flow-arrow">&#10230;</div>
+          <div class="flow-node flow-stage" data-stage="3">
+            <div class="flow-icon">&#931;</div>
+            <div class="flow-label">Conic Bundle<br>Adjustment</div>
+          </div>
+          <div class="flow-arrow">&#10230;</div>
+          <div class="flow-node flow-endpoint">
+            <div class="flow-icon">&#127919;</div>
+            <div class="flow-label">6-DoF<br>Camera Pose</div>
+          </div>
+        </div>
+
+        <div class="flow-detail-panel" id="flow-detail-panel"></div>
+
+        <div class="flow-detail-source" data-stage="1" hidden>
+          <h4>1&nbsp;&middot;&nbsp;Ellipse &amp; Line Feature Extraction</h4>
+          <p>A YOLO-based detector localizes the two circular landmarks, followed by ellipse fitting to recover each
+          conic's image-plane parameters. In parallel, an LSD line detector extracts candidate line segments for the
+          Manhattan-world stage.</p>
+        </div>
+        <div class="flow-detail-source" data-stage="2" hidden>
+          <h4>2&nbsp;&middot;&nbsp;P2C Solver with Manhattan-World Line Optimization</h4>
+          <p>Each detected ellipse defines a tangent-ray cone back-projected from the camera center. Eigen-decomposing
+          this cone yields a closed-form, metric-scale 3D center and surface normal for each circle. Since both circles
+          lie on the same rigid panel, the two-fold P2C ambiguity is resolved by selecting the solution pair whose
+          normals align most strongly. The recovered dominant plane then anchors a RANSAC-based Manhattan-world line
+          optimization that refines the camera rotation for drift-free, noise-robust orientation.</p>
+        </div>
+        <div class="flow-detail-source" data-stage="3" hidden>
+          <h4>3&nbsp;&middot;&nbsp;Conic Bundle Adjustment (CBA)</h4>
+          <p>All per-frame poses are jointly refined by minimizing algebraic conic residuals &mdash; whether reprojected
+          3D circle points satisfy the detected ellipse's implicit quadratic equation &mdash; via Levenberg&ndash;Marquardt,
+          enforcing global geometric consistency without explicit point-to-point correspondences.</p>
+        </div>
 
       </div>
     </div>
 
   </div>
 </section>
-  
-  
-<!-- ===================== Pipeline Section ===================== -->
-<section class="section">
+
+<hr class="section-divider">
+
+<!-- ===================== Datasets & Video Results Section ===================== -->
+<section class="section" id="Datasets">
   <div class="container is-max-desktop">
 
-    <!-- Title -->
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-2">Pipeline</h2>
-      </div>
-    </div>
-
-    <!-- Description -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
+        <h2 class="title is-2">Datasets &amp; Video Results</h2>
         <div class="content has-text-justified">
           <p>
-            The ConicLoc pipeline estimates 6-DoF camera pose using 
-            <strong>two circular structures</strong> (hatch and window) 
-            together with <strong>Manhattan World line constraints</strong>.
-          </p>
-
-          <p>
-            Given detected ellipses and structural line segments in the image, 
-            we recover the geometric relationship between projected conics and 
-            their corresponding 3D circles. The Manhattan constraints provide 
-            additional orientation regularization, improving robustness under 
-            centroid, axis, and angle noise.
-          </p>
-
-          <p>
-            The final pose is refined through nonlinear optimization using 
-            conic reprojection residuals and line alignment constraints.
+            ConicLoc is evaluated on three complementary settings: a controlled <strong>synthetic</strong> noise study that
+            isolates the contribution of each geometric cue, a <strong>Crazyflie nano-drone day&ndash;night</strong> dataset
+            that stresses illumination robustness, and the <strong>Astrobee ISS free-flyer</strong> dataset that stresses
+            real robotic operation inside a structured, low-texture environment.
           </p>
         </div>
       </div>
     </div>
 
-    <!-- Video -->
+    <!-- Synthetic Dataset Video -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4">Synthetic Noise Study</h3>
+        <div class="content has-text-justified">
+          <p>
+            Noise-free ellipse observations are generated by projecting 3D circular structures onto a virtual camera, then
+            zero-mean Gaussian noise is independently injected into the ellipse centroid, axes, and orientation across a
+            range of noise levels &sigma; &isin; [0, 10]. The ellipse-only pipeline degrades sharply once noise exceeds a
+            moderate level, while incorporating Manhattan-world line cues keeps both ATE and ARE stable even under strong
+            noise (&sigma; = 10).
+          </p>
+        </div>
+      </div>
+    </div>
     <div class="columns is-centered">
       <div class="column is-full has-text-centered">
         <video autoplay muted loop playsinline
-               style="pointer-events: none; max-width: 100%; height: auto;">
-          <source src="./static/pipeline.mp4" type="video/mp4">
+               style="max-width: 100%; height: auto; border-radius: 8px;">
+          <source src="./static/synthetic.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Crazyflie Day-Night Video -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 3rem;">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4">Crazyflie Day&ndash;Night Localization</h3>
+        <div class="content has-text-justified">
+          <p>
+            An author-collected dataset captured with a Crazyflie nano-drone near a building equipped with two circular
+            windows. A reference map is built from day images only; ConicLoc is then localized against separate day and
+            night query sequences without ever rebuilding the map or retraining a model.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+        <video autoplay muted loop playsinline
+               style="max-width: 100%; height: auto; border-radius: 8px;">
+          <source src="./static/crazyflie.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+    <!-- Astrobee Video -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 3rem;">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4">Astrobee ISS Free-Flyer</h3>
+        <div class="content has-text-justified">
+          <p>
+            ConicLoc is evaluated on Astrobee free-flyer sequences recorded inside the ISS JEM (Kibo) module, under both
+            original and artificially darkened illumination, using only a hatch and a window as circular landmarks.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+        <video autoplay muted loop playsinline
+               style="max-width: 100%; height: auto; border-radius: 8px;">
+          <source src="./static/astrobee.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
       </div>
@@ -241,23 +659,151 @@ Without a pre-built map, ConicLoc achieves accuracy comparable to map-based VL m
   </div>
 </section>
 
+<hr class="section-divider">
+
+<!-- ===================== Quantitative Results Section ===================== -->
+<section class="section" id="Results">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-2">Quantitative Results</h2>
+      </div>
+    </div>
+
+    <h3 class="title is-4">Crazyflie Day&ndash;Night Dataset</h3>
+    <div class="table-scroll">
+      <table class="table is-fullwidth is-bordered is-striped is-narrow">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Map Size</th>
+            <th>Model Size</th>
+            <th>Day ATE</th>
+            <th>Day ARE</th>
+            <th>Night ATE</th>
+            <th>Night ARE</th>
+            <th>Runtime</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="ours-row">
+            <td>ConicLoc (Ours)</td><td>16 bytes</td><td>0 MB</td>
+            <td>0.615 m</td><td>3.69&deg;</td><td>0.295 m</td><td>4.30&deg;</td><td>0 min / 81 ms</td>
+          </tr>
+          <tr><td>Colmap</td><td>113.8 MB</td><td>0 MB</td><td>0.710 m</td><td>4.82&deg;</td><td>251.7 m</td><td>118.4&deg;</td><td>26 min / 10.5 ms</td></tr>
+          <tr><td>HLoc</td><td>208.3 MB</td><td>580 MB</td><td>0.393 m</td><td>4.82&deg;</td><td>0.865 m</td><td>6.91&deg;</td><td>10 min / 25.1 ms</td></tr>
+          <tr><td>MASt3R</td><td>0 MB</td><td>2.75 GB</td><td>1.085 m</td><td>8.79&deg;</td><td>1.625 m</td><td>17.78&deg;</td><td>0 min / 3764 ms</td></tr>
+          <tr><td>ACE</td><td>6.2 MB</td><td>25.2 MB</td><td>0.271 m</td><td>5.94&deg;</td><td>7.673 m</td><td>76.83&deg;</td><td>11 min / 23.5 ms</td></tr>
+          <tr><td>GLACE</td><td>9.6 MB</td><td>287 MB</td><td>0.672 m</td><td>9.86&deg;</td><td>10.125 m</td><td>100.87&deg;</td><td>30 min / 26.8 ms</td></tr>
+          <tr><td>R-SCoRe</td><td>3.0 MB</td><td>677 MB</td><td>0.262 m</td><td>4.78&deg;</td><td>33.769 m</td><td>112.04&deg;</td><td>3.3 h / 120 ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">ATE / ARE reported per Sturm et al.'s RGB-D SLAM benchmark protocol. Under night conditions,
+      appearance-based baselines (Colmap, ACE, GLACE, R-SCoRe) collapse to near-zero success, while ConicLoc's accuracy
+      barely shifts from day to night.</p>
+
+    <h3 class="title is-4" style="margin-top: 2.5rem;">Astrobee &mdash; ff_journey_return_forward Dataset</h3>
+    <div class="table-scroll">
+      <table class="table is-fullwidth is-bordered is-striped is-narrow">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>Map Size</th>
+            <th>Model Size</th>
+            <th>Original ATE</th>
+            <th>Original ARE</th>
+            <th>Dark ATE</th>
+            <th>Dark ARE</th>
+            <th>Runtime</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="ours-row">
+            <td>ConicLoc (Ours)</td><td>16 bytes</td><td>0 MB</td>
+            <td>0.088 m</td><td>1.499&deg;</td><td>0.093 m</td><td>1.620&deg;</td><td>0 min / 88.1 ms</td>
+          </tr>
+          <tr><td>AstroLoc</td><td>361.5 MB</td><td>0 MB</td><td>0.238 m</td><td>0.29&deg;</td><td>0.295 m</td><td>0.64&deg;</td><td>&sim;180 min / 465 ms</td></tr>
+          <tr><td>AstroLoc2</td><td>559.3 MB</td><td>0 MB</td><td>0.058 m</td><td>0.37&deg;</td><td>0.059 m</td><td>0.46&deg;</td><td>&sim;180 min / 525 ms</td></tr>
+          <tr><td>Colmap</td><td>5.6 GB</td><td>0 MB</td><td>0.03 m</td><td>0.09&deg;</td><td>0.090 m</td><td>0.11&deg;</td><td>163 min / 4620 ms</td></tr>
+          <tr><td>HLoc</td><td>579 MB</td><td>580 MB</td><td>0.04 m</td><td>0.05&deg;</td><td>0.079 m</td><td>0.90&deg;</td><td>215 min / 4311 ms</td></tr>
+          <tr><td>MASt3R</td><td>0 MB</td><td>2.75 GB</td><td>0.086 m</td><td>0.85&deg;</td><td>0.102 m</td><td>1.24&deg;</td><td>0 min / 3500 ms</td></tr>
+          <tr><td>ACE</td><td>6.2 MB</td><td>25.2 MB</td><td>0.015 m</td><td>0.13&deg;</td><td>3.374 m</td><td>67.46&deg;</td><td>8.4 min / 118 ms</td></tr>
+          <tr><td>GLACE</td><td>9.6 MB</td><td>287 MB</td><td>0.003 m</td><td>0.10&deg;</td><td>4.511 m</td><td>69.91&deg;</td><td>33 min / 139 ms</td></tr>
+          <tr><td>R-SCoRe</td><td>3.0 MB</td><td>677 MB</td><td>0.007 m</td><td>0.06&deg;</td><td>0.186 m</td><td>0.41&deg;</td><td>198 min / 215 ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">ConicLoc achieves competitive accuracy with an 18-byte geometric prior and no map/training
+      stage. Under darkened illumination, AstroLoc/AstroLoc2 and the SCR methods (ACE, GLACE) degrade sharply, while
+      ConicLoc's accuracy and success rate remain nearly unchanged from the original condition.</p>
+
+    <h3 class="title is-4" style="margin-top: 2.5rem;">Absolute Rotation Error [deg] on ISS Rotation-Dominant Sequences</h3>
+    <div class="table-scroll">
+      <table class="table is-fullwidth is-bordered is-striped is-narrow">
+        <thead>
+          <tr>
+            <th>Method</th>
+            <th>ff_return_journey_rot</th>
+            <th>iva_kibo_rot</th>
+            <th>td_yaw</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="ours-row"><td>ConicLoc (Ours)</td><td>1.782</td><td>1.665</td><td>1.357</td></tr>
+          <tr><td>AstroLoc</td><td>3.601</td><td>1.056</td><td>0.364</td></tr>
+          <tr><td>AstroLoc (VIO mode)</td><td>4.455</td><td>7.859</td><td>0.451</td></tr>
+          <tr><td>AstroLoc2</td><td>6.516</td><td>&ndash;</td><td>&ndash;</td></tr>
+          <tr><td>AstroLoc2 (VIO mode)</td><td>5.737</td><td>&ndash;</td><td>&ndash;</td></tr>
+          <tr><td>ORB-SLAM3</td><td>7.708</td><td>16.630</td><td>1.698</td></tr>
+          <tr><td>DSO</td><td>14.207</td><td>6.663</td><td>1.603</td></tr>
+          <tr><td>DROID-SLAM</td><td>1.422</td><td>15.854</td><td>1.390</td></tr>
+          <tr><td>COLMAP Localization</td><td>0.724</td><td>0.991</td><td>0.469</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- ===================== Limitations Section ===================== -->
+<section class="section" id="Limitations">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-2">Limitations</h2>
+        <div class="content has-text-justified">
+          <p>
+            ConicLoc relies on circular landmarks with known radii, exhibiting some scene dependency; however, such
+            structures and their dimensions are commonly available or measurable in engineered environments. It also
+            assumes circle normals aligned with the Manhattan-world axes, well suited to structured interiors; extending
+            to arbitrarily oriented circles is a promising direction for future work.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>
-</code></pre>
+    <pre><code>@article{anonymous2026conicloc,
+  title   = {ConicLoc: Geometry-Driven Monocular Localization via Perspective-Two-Circle with Structural Conic Priors},
+  author  = {Anonymous Author(s)},
+  journal = {IEEE Robotics and Automation Letters (RA-L)},
+  year    = {2026},
+  note    = {Under double-blind review}
+}</code></pre>
   </div>
 </section>
 
 <footer class="footer">
   <div class="container">
     <div class="content has-text-centered">
-      <a class="icon-link"
-         href="./static/paper.pdf">
+      <a class="icon-link is-coming-soon" href="" title="Paper coming soon">
         <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/jungilha/SanFranciscoWorld.github.io" class="external-link">
-        <i class="fab fa-github"></i>
       </a>
     </div>
     <div class="columns is-centered">
@@ -271,6 +817,67 @@ Without a pre-built map, ConicLoc achieves accuracy comparable to map-based VL m
     </div>
   </div>
 </footer>
+
+<script>
+  (function () {
+    // Interactive pipeline flow diagram
+    var stageNodes = document.querySelectorAll('.flow-node.flow-stage');
+    var detailSources = document.querySelectorAll('.flow-detail-source');
+    var detailPanel = document.getElementById('flow-detail-panel');
+
+    function showStage(stage) {
+      stageNodes.forEach(function (node) {
+        node.classList.toggle('is-active', node.getAttribute('data-stage') === stage);
+      });
+      detailSources.forEach(function (src) {
+        if (src.getAttribute('data-stage') === stage) {
+          detailPanel.innerHTML = src.innerHTML;
+        }
+      });
+    }
+
+    stageNodes.forEach(function (node) {
+      node.addEventListener('click', function () {
+        showStage(node.getAttribute('data-stage'));
+      });
+    });
+
+    if (stageNodes.length) {
+      showStage(stageNodes[0].getAttribute('data-stage'));
+    }
+
+    // Sticky sub-navigation: show after scrolling past the hero, highlight current section
+    var subnav = document.getElementById('site-subnav');
+    var navLinks = subnav ? subnav.querySelectorAll('a') : [];
+    var sections = Array.prototype.slice.call(navLinks).map(function (link) {
+      return document.getElementById(link.getAttribute('href').slice(1));
+    }).filter(Boolean);
+
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 420) {
+        subnav.classList.add('is-visible');
+      } else {
+        subnav.classList.remove('is-visible');
+      }
+    });
+
+    if (window.IntersectionObserver && sections.length) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            navLinks.forEach(function (link) {
+              link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id);
+            });
+          }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+
+      sections.forEach(function (sec) {
+        observer.observe(sec);
+      });
+    }
+  })();
+</script>
 
 </body>
 </html>
