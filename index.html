@@ -316,6 +316,16 @@
       margin: 0;
       color: #444;
     }
+    .flow-image-placeholder {
+      margin-top: 0.85rem;
+      padding: 1.5rem;
+      border: 1px dashed #ccc;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #aaa;
+      background: #fff;
+    }
     @media (max-width: 768px) {
       .flow-diagram {
         flex-direction: column;
@@ -409,7 +419,7 @@
   <div class="container is-max-desktop">
     <div class="stat-grid">
       <div class="stat-card">
-        <span class="stat-number">16&ndash;18 bytes</span>
+        <span class="stat-number">16 bytes</span>
         <span class="stat-label">geometric prior per scene, vs. hundreds of MB&ndash;GB maps/models for map-based baselines</span>
       </div>
       <div class="stat-card">
@@ -417,8 +427,8 @@
         <span class="stat-label">map building or training &mdash; no SfM reconstruction, no GPU training stage</span>
       </div>
       <div class="stat-card">
-        <span class="stat-number">0.295 m / 4.30&deg;</span>
-        <span class="stat-label">translation / rotation error at night on Crazyflie, while appearance-based baselines collapse</span>
+        <span class="stat-number">~3&times; more accurate at night</span>
+        <span class="stat-label">0.295 m/4.30&deg; vs. 0.865 m/6.91&deg; for HLoc, the best baseline &mdash; others collapse to 10&ndash;250 m error</span>
       </div>
       <div class="stat-card">
         <span class="stat-number">~81&ndash;88 ms/frame</span>
@@ -511,12 +521,12 @@
       <div class="column is-full">
 
         <div class="flow-diagram" id="flow-diagram">
-          <div class="flow-node flow-endpoint">
+          <div class="flow-node flow-stage flow-endpoint" data-stage="0">
             <div class="flow-icon">&#128247;</div>
             <div class="flow-label">Monocular<br>Image</div>
           </div>
           <div class="flow-arrow">&#10230;</div>
-          <div class="flow-node flow-stage is-active" data-stage="1">
+          <div class="flow-node flow-stage" data-stage="1">
             <div class="flow-icon">&#9678;</div>
             <div class="flow-label">Ellipse &amp; Line<br>Extraction</div>
           </div>
@@ -531,7 +541,7 @@
             <div class="flow-label">Conic Bundle<br>Adjustment</div>
           </div>
           <div class="flow-arrow">&#10230;</div>
-          <div class="flow-node flow-endpoint">
+          <div class="flow-node flow-stage flow-endpoint" data-stage="4">
             <div class="flow-icon">&#127919;</div>
             <div class="flow-label">6-DoF<br>Camera Pose</div>
           </div>
@@ -539,6 +549,13 @@
 
         <div class="flow-detail-panel" id="flow-detail-panel"></div>
 
+        <div class="flow-detail-source" data-stage="0" hidden>
+          <h4>0&nbsp;&middot;&nbsp;Monocular Image</h4>
+          <p>A single RGB frame from the onboard camera (Astrobee or Crazyflie), containing two visible circular
+          landmarks &mdash; e.g., a hatch and a window &mdash; as the sole geometric input. No depth sensor or stereo
+          pair is required.</p>
+          <div class="flow-image-placeholder">Example input frame &mdash; coming soon</div>
+        </div>
         <div class="flow-detail-source" data-stage="1" hidden>
           <h4>1&nbsp;&middot;&nbsp;Ellipse &amp; Line Feature Extraction</h4>
           <p>A YOLO-based detector localizes the two circular landmarks, followed by ellipse fitting to recover each
@@ -558,6 +575,13 @@
           <p>All per-frame poses are jointly refined by minimizing algebraic conic residuals &mdash; whether reprojected
           3D circle points satisfy the detected ellipse's implicit quadratic equation &mdash; via Levenberg&ndash;Marquardt,
           enforcing global geometric consistency without explicit point-to-point correspondences.</p>
+        </div>
+        <div class="flow-detail-source" data-stage="4" hidden>
+          <h4>4&nbsp;&middot;&nbsp;6-DoF Camera Pose</h4>
+          <p>The final output: a metric-scale camera rotation and translation in the world frame, refined by conic
+          bundle adjustment. This pose is what downstream navigation and control modules consume &mdash; no map or
+          learned model is carried forward between frames.</p>
+          <div class="flow-image-placeholder">Example pose visualization &mdash; coming soon</div>
         </div>
 
       </div>
@@ -734,7 +758,7 @@
         </tbody>
       </table>
     </div>
-    <p class="table-note">ConicLoc achieves competitive accuracy with an 18-byte geometric prior and no map/training
+    <p class="table-note">ConicLoc achieves competitive accuracy with a 16-byte geometric prior and no map/training
       stage. Under darkened illumination, AstroLoc/AstroLoc2 and the SCR methods (ACE, GLACE) degrade sharply, while
       ConicLoc's accuracy and success rate remain nearly unchanged from the original condition.</p>
 
