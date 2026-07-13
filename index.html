@@ -98,22 +98,91 @@
       margin-top: 1.5rem;
     }
     .stat-card {
-      background: #fafafa;
+      position: relative;
+      background: #fff;
       border: 1px solid #eee;
-      border-radius: 10px;
-      padding: 1.25rem 1rem;
+      border-radius: 12px;
+      padding: 1.5rem 1.25rem 1.35rem;
       text-align: center;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    .stat-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease,
+                  opacity 0.5s ease, transform 0.5s ease;
+    }
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent, #222);
+    }
+    .stat-card {
+      cursor: pointer;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+      border-color: var(--accent, #222);
+    }
+    .stat-card.is-selected {
+      border-color: var(--accent, #222);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+    .stat-hint {
+      display: block;
+      margin-top: 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--accent, #888);
+      opacity: 0.85;
+    }
+    .stat-detail-panel {
+      max-width: 640px;
+      margin: 0 auto;
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+    }
+    .stat-detail-panel.is-open {
+      max-height: 480px;
+      opacity: 1;
+      margin: 1.5rem auto 0;
+    }
+    .stat-detail-panel h4 {
+      font-family: 'Google Sans', sans-serif;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .stat-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      filter: grayscale(15%);
     }
     .stat-card .stat-number {
       display: block;
       font-family: 'Google Sans', sans-serif;
       font-size: 1.7rem;
       font-weight: 700;
+      background: linear-gradient(135deg, #111 0%, var(--accent, #222) 120%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
       color: #222;
     }
     .stat-card .stat-label {
       display: block;
-      margin-top: 0.35rem;
+      margin-top: 0.5rem;
       font-size: 0.85rem;
       color: #666;
     }
@@ -126,17 +195,46 @@
       margin-top: 1rem;
     }
     .contrib-card {
+      position: relative;
       border: 1px solid #eee;
       border-radius: 10px;
-      padding: 1.25rem 1.25rem;
+      padding: 1.5rem 1.25rem 1.25rem;
       background: #fff;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    .contrib-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease,
+                  opacity 0.5s ease, transform 0.5s ease;
+    }
+    .contrib-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent, #222);
+    }
+    .contrib-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+      border-color: var(--accent, #222);
     }
     .contrib-card .contrib-index {
       font-family: 'Google Sans', sans-serif;
       font-weight: 700;
-      color: #bbb;
       font-size: 1.5rem;
       line-height: 1;
+      background: linear-gradient(135deg, #111 0%, var(--accent, #222) 130%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: #bbb;
     }
 
     /* Method stage list */
@@ -175,16 +273,43 @@
 
     /* Result tables */
     .table-scroll {
-      overflow-x: auto;
+      overflow: auto;
       margin-top: 1rem;
       margin-bottom: 1rem;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
     }
     .table-scroll table {
+      margin-bottom: 0;
+    }
+    .table-scroll.table-wide table {
       min-width: 720px;
+    }
+    .table-scroll thead th {
+      background: #1a1a1a;
+      color: #fff;
+      font-weight: 600;
+      border-color: #1a1a1a;
+    }
+    .table-scroll tbody tr:not(.ours-row):hover {
+      background: #f5f7fb;
     }
     tr.ours-row {
       background: #eef6ff !important;
       font-weight: 700;
+    }
+    .ours-badge {
+      display: inline-block;
+      margin-left: 0.4rem;
+      padding: 0.05rem 0.5rem;
+      border-radius: 999px;
+      background: #3273dc;
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      vertical-align: middle;
     }
     .table-note {
       font-size: 0.85rem;
@@ -196,6 +321,83 @@
       border: none;
       border-top: 1px solid #eee;
       margin: 0;
+    }
+
+    /* Section heading accent */
+    .columns.is-centered.has-text-centered .title.is-2 {
+      position: relative;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem !important;
+    }
+    .columns.is-centered.has-text-centered .title.is-2::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 3px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #3273dc, #805ad5);
+    }
+
+    /* Reveal-on-scroll (generic) */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Video frames */
+    .media-frame {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #eee;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .media-frame:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    }
+    .media-frame video {
+      display: block;
+    }
+
+    /* BibTeX code block */
+    .bibtex-block {
+      position: relative;
+    }
+    .bibtex-block pre {
+      background: #1a1a1a;
+      color: #d4d4d4;
+      border-radius: 10px;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+      overflow-x: auto;
+    }
+    .bibtex-block .bx-key { color: #9cdcfe; }
+    .bibtex-block .bx-str { color: #ce9178; }
+    .bibtex-copy {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      background: #333;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.72rem;
+      font-family: 'Google Sans', sans-serif;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .bibtex-copy:hover {
+      background: #555;
     }
 
     /* Sticky sub-navigation */
@@ -417,24 +619,107 @@
 
 <section class="section" style="padding-top: 0;">
   <div class="container is-max-desktop">
-    <div class="stat-grid">
-      <div class="stat-card">
+    <div class="stat-grid" id="stat-grid">
+      <div class="stat-card" style="--accent: #3273dc;" data-stat="size">
+        <div class="stat-icon">&#128230;</div>
         <span class="stat-number">16 bytes</span>
         <span class="stat-label">geometric prior per scene, vs. hundreds of MB&ndash;GB maps/models for map-based baselines</span>
+        <span class="stat-hint">Compare with other methods &#8250;</span>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" style="--accent: #38a169;" data-stat="time">
+        <div class="stat-icon">&#9203;</div>
         <span class="stat-number">0 min</span>
         <span class="stat-label">map building or training &mdash; no SfM reconstruction, no GPU training stage</span>
+        <span class="stat-hint">Compare with other methods &#8250;</span>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" style="--accent: #d6620a;" data-stat="accuracy">
+        <div class="stat-icon">&#127919;</div>
         <span class="stat-number">~3&times; more accurate at night</span>
         <span class="stat-label">0.295 m/4.30&deg; vs. 0.865 m/6.91&deg; for HLoc, the best baseline &mdash; others collapse to 10&ndash;250 m error</span>
+        <span class="stat-hint">Compare with other methods &#8250;</span>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" style="--accent: #805ad5;" data-stat="runtime">
+        <div class="stat-icon">&#9889;</div>
         <span class="stat-number">~81&ndash;88 ms/frame</span>
         <span class="stat-label">fastest runtime among all compared methods, with no GPU required at inference</span>
+        <span class="stat-hint">Compare with other methods &#8250;</span>
       </div>
     </div>
+
+    <div class="stat-detail-panel" id="stat-detail-panel"></div>
+
+    <div class="stat-detail-source" data-stat="size" hidden>
+      <h4>Map Size / Model Size &mdash; Crazyflie Day&ndash;Night Dataset</h4>
+      <div class="table-scroll">
+        <table class="table is-fullwidth is-bordered is-striped is-narrow">
+          <thead><tr><th>Method</th><th>Map Size</th><th>Model Size</th></tr></thead>
+          <tbody>
+            <tr class="ours-row"><td>ConicLoc<span class="ours-badge">Ours</span></td><td>16 bytes</td><td>0 MB</td></tr>
+            <tr><td>Colmap</td><td>113.8 MB</td><td>0 MB</td></tr>
+            <tr><td>HLoc</td><td>208.3 MB</td><td>580 MB</td></tr>
+            <tr><td>MASt3R</td><td>0 MB</td><td>2.75 GB</td></tr>
+            <tr><td>ACE</td><td>6.2 MB</td><td>25.2 MB</td></tr>
+            <tr><td>GLACE</td><td>9.6 MB</td><td>287 MB</td></tr>
+            <tr><td>R-SCoRe</td><td>3.0 MB</td><td>677 MB</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="stat-detail-source" data-stat="time" hidden>
+      <h4>Map-Building / Training Time &mdash; Crazyflie Day&ndash;Night Dataset</h4>
+      <div class="table-scroll">
+        <table class="table is-fullwidth is-bordered is-striped is-narrow">
+          <thead><tr><th>Method</th><th>Build / Train Time</th></tr></thead>
+          <tbody>
+            <tr class="ours-row"><td>ConicLoc<span class="ours-badge">Ours</span></td><td>0 min</td></tr>
+            <tr><td>Colmap</td><td>26 min</td></tr>
+            <tr><td>HLoc</td><td>10 min</td></tr>
+            <tr><td>MASt3R</td><td>0 min</td></tr>
+            <tr><td>ACE</td><td>11 min</td></tr>
+            <tr><td>GLACE</td><td>30 min</td></tr>
+            <tr><td>R-SCoRe</td><td>3.3 h</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="stat-detail-source" data-stat="accuracy" hidden>
+      <h4>Night Localization Accuracy &mdash; Crazyflie Day&ndash;Night Dataset</h4>
+      <div class="table-scroll">
+        <table class="table is-fullwidth is-bordered is-striped is-narrow">
+          <thead><tr><th>Method</th><th>Night ATE</th><th>Night ARE</th></tr></thead>
+          <tbody>
+            <tr class="ours-row"><td>ConicLoc<span class="ours-badge">Ours</span></td><td>0.295 m</td><td>4.30&deg;</td></tr>
+            <tr><td>Colmap</td><td>251.7 m</td><td>118.4&deg;</td></tr>
+            <tr><td>HLoc</td><td>0.865 m</td><td>6.91&deg;</td></tr>
+            <tr><td>MASt3R</td><td>1.625 m</td><td>17.78&deg;</td></tr>
+            <tr><td>ACE</td><td>7.673 m</td><td>76.83&deg;</td></tr>
+            <tr><td>GLACE</td><td>10.125 m</td><td>100.87&deg;</td></tr>
+            <tr><td>R-SCoRe</td><td>33.769 m</td><td>112.04&deg;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="stat-detail-source" data-stat="runtime" hidden>
+      <h4>Per-Frame Runtime &mdash; Crazyflie Day&ndash;Night Dataset</h4>
+      <div class="table-scroll">
+        <table class="table is-fullwidth is-bordered is-striped is-narrow">
+          <thead><tr><th>Method</th><th>Runtime / Frame</th></tr></thead>
+          <tbody>
+            <tr class="ours-row"><td>ConicLoc<span class="ours-badge">Ours</span></td><td>81 ms</td></tr>
+            <tr><td>Colmap</td><td>10.5 ms</td></tr>
+            <tr><td>HLoc</td><td>25.1 ms</td></tr>
+            <tr><td>MASt3R</td><td>3764 ms</td></tr>
+            <tr><td>ACE</td><td>23.5 ms</td></tr>
+            <tr><td>GLACE</td><td>26.8 ms</td></tr>
+            <tr><td>R-SCoRe</td><td>120 ms</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -478,17 +763,17 @@
       </div>
     </div>
     <div class="contrib-grid">
-      <div class="contrib-card">
+      <div class="contrib-card" style="--accent: #3273dc;">
         <div class="contrib-index">01</div>
         <p>We fully exploit structural conic geometry with a closed-form <strong>Perspective&ndash;Two&ndash;Circle (P2C)</strong>
         solver and a <strong>conic bundle adjustment (CBA)</strong> that globally optimizes algebraic ellipse residuals.</p>
       </div>
-      <div class="contrib-card">
+      <div class="contrib-card" style="--accent: #38a169;">
         <div class="contrib-index">02</div>
         <p>We identify and alleviate the noise sensitivity of monocular conic pose estimation by integrating
         <strong>Manhattan world (MW)</strong> constraints, and demonstrate its effectiveness through synthetic experiments.</p>
       </div>
-      <div class="contrib-card">
+      <div class="contrib-card" style="--accent: #d6620a;">
         <div class="contrib-index">03</div>
         <p>We evaluate ConicLoc across two robotic platforms &mdash; an ISS free-flying robot (Astrobee) and a
         nano-drone (Crazyflie) &mdash; under day and night conditions, achieving accuracy comparable to map-based VL
@@ -630,11 +915,12 @@
     </div>
     <div class="columns is-centered">
       <div class="column is-full has-text-centered">
-        <video autoplay muted loop playsinline
-               style="max-width: 100%; height: auto; border-radius: 8px;">
-          <source src="./static/synthetic.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+        <div class="media-frame reveal">
+          <video autoplay muted loop playsinline style="max-width: 100%; height: auto;">
+            <source src="./static/synthetic.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
     </div>
 
@@ -653,11 +939,12 @@
     </div>
     <div class="columns is-centered">
       <div class="column is-full has-text-centered">
-        <video autoplay muted loop playsinline
-               style="max-width: 100%; height: auto; border-radius: 8px;">
-          <source src="./static/crazyflie.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+        <div class="media-frame reveal">
+          <video autoplay muted loop playsinline style="max-width: 100%; height: auto;">
+            <source src="./static/crazyflie.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
     </div>
 
@@ -675,11 +962,12 @@
     </div>
     <div class="columns is-centered">
       <div class="column is-full has-text-centered">
-        <video autoplay muted loop playsinline
-               style="max-width: 100%; height: auto; border-radius: 8px;">
-          <source src="./static/astrobee.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+        <div class="media-frame reveal">
+          <video autoplay muted loop playsinline style="max-width: 100%; height: auto;">
+            <source src="./static/astrobee.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
     </div>
 
@@ -698,7 +986,7 @@
     </div>
 
     <h3 class="title is-4">Crazyflie Day&ndash;Night Dataset</h3>
-    <div class="table-scroll">
+    <div class="table-scroll table-wide reveal">
       <table class="table is-fullwidth is-bordered is-striped is-narrow">
         <thead>
           <tr>
@@ -714,7 +1002,7 @@
         </thead>
         <tbody>
           <tr class="ours-row">
-            <td>ConicLoc (Ours)</td><td>16 bytes</td><td>0 MB</td>
+            <td>ConicLoc<span class="ours-badge">Ours</span></td><td>16 bytes</td><td>0 MB</td>
             <td>0.615 m</td><td>3.69&deg;</td><td>0.295 m</td><td>4.30&deg;</td><td>0 min / 81 ms</td>
           </tr>
           <tr><td>Colmap</td><td>113.8 MB</td><td>0 MB</td><td>0.710 m</td><td>4.82&deg;</td><td>251.7 m</td><td>118.4&deg;</td><td>26 min / 10.5 ms</td></tr>
@@ -731,7 +1019,7 @@
       barely shifts from day to night.</p>
 
     <h3 class="title is-4" style="margin-top: 2.5rem;">Astrobee &mdash; ff_journey_return_forward Dataset</h3>
-    <div class="table-scroll">
+    <div class="table-scroll table-wide reveal">
       <table class="table is-fullwidth is-bordered is-striped is-narrow">
         <thead>
           <tr>
@@ -747,7 +1035,7 @@
         </thead>
         <tbody>
           <tr class="ours-row">
-            <td>ConicLoc (Ours)</td><td>16 bytes</td><td>0 MB</td>
+            <td>ConicLoc<span class="ours-badge">Ours</span></td><td>16 bytes</td><td>0 MB</td>
             <td>0.088 m</td><td>1.499&deg;</td><td>0.093 m</td><td>1.620&deg;</td><td>0 min / 88.1 ms</td>
           </tr>
           <tr><td>AstroLoc</td><td>361.5 MB</td><td>0 MB</td><td>0.238 m</td><td>0.29&deg;</td><td>0.295 m</td><td>0.64&deg;</td><td>&sim;180 min / 465 ms</td></tr>
@@ -766,7 +1054,7 @@
       ConicLoc's accuracy and success rate remain nearly unchanged from the original condition.</p>
 
     <h3 class="title is-4" style="margin-top: 2.5rem;">Absolute Rotation Error [deg] on ISS Rotation-Dominant Sequences</h3>
-    <div class="table-scroll">
+    <div class="table-scroll table-wide reveal">
       <table class="table is-fullwidth is-bordered is-striped is-narrow">
         <thead>
           <tr>
@@ -777,7 +1065,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="ours-row"><td>ConicLoc (Ours)</td><td>1.782</td><td>1.665</td><td>1.357</td></tr>
+          <tr class="ours-row"><td>ConicLoc<span class="ours-badge">Ours</span></td><td>1.782</td><td>1.665</td><td>1.357</td></tr>
           <tr><td>AstroLoc</td><td>3.601</td><td>1.056</td><td>0.364</td></tr>
           <tr><td>AstroLoc (VIO mode)</td><td>4.455</td><td>7.859</td><td>0.451</td></tr>
           <tr><td>AstroLoc2</td><td>6.516</td><td>&ndash;</td><td>&ndash;</td></tr>
@@ -816,13 +1104,16 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{conicloc,
-  title   = {},
-  author  = {},
-  journal = {},
-  year    = {},
-  note    = {Under double-blind review &mdash; citation to be finalized upon acceptance}
+    <div class="bibtex-block reveal">
+      <button class="bibtex-copy" id="bibtex-copy" type="button">Copy</button>
+      <pre><code id="bibtex-code">@article{<span class="bx-str">conicloc</span>,
+  <span class="bx-key">title</span>   = {},
+  <span class="bx-key">author</span>  = {},
+  <span class="bx-key">journal</span> = {},
+  <span class="bx-key">year</span>    = {},
+  <span class="bx-key">note</span>    = {<span class="bx-str">Under double-blind review &mdash; citation to be finalized upon acceptance</span>}
 }</code></pre>
+    </div>
   </div>
 </section>
 
@@ -847,6 +1138,70 @@
 
 <script>
   (function () {
+    // Generic staggered fade-in reveal on scroll
+    function staggerReveal(nodeList, stepMs) {
+      var nodes = Array.prototype.slice.call(nodeList);
+      if (!window.IntersectionObserver || !nodes.length) {
+        nodes.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var obs = new IntersectionObserver(function (entries, o) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var index = nodes.indexOf(entry.target);
+            setTimeout(function () {
+              entry.target.classList.add('is-visible');
+            }, index * stepMs);
+            o.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.25 });
+      nodes.forEach(function (el) { obs.observe(el); });
+    }
+
+    staggerReveal(document.querySelectorAll('#stat-grid .stat-card'), 100);
+    staggerReveal(document.querySelectorAll('.contrib-grid .contrib-card'), 120);
+    staggerReveal(document.querySelectorAll('.reveal'), 80);
+
+    // BibTeX copy-to-clipboard
+    var bibtexCopyBtn = document.getElementById('bibtex-copy');
+    if (bibtexCopyBtn) {
+      bibtexCopyBtn.addEventListener('click', function () {
+        var text = document.getElementById('bibtex-code').innerText;
+        navigator.clipboard.writeText(text).then(function () {
+          bibtexCopyBtn.textContent = 'Copied!';
+          setTimeout(function () { bibtexCopyBtn.textContent = 'Copy'; }, 1500);
+        });
+      });
+    }
+
+    // Stat strip: click a card to compare its metric against other methods
+    var statCardEls = document.querySelectorAll('.stat-card[data-stat]');
+    var statDetailSources = document.querySelectorAll('.stat-detail-source');
+    var statDetailPanel = document.getElementById('stat-detail-panel');
+
+    statCardEls.forEach(function (card) {
+      card.addEventListener('click', function () {
+        var stat = card.getAttribute('data-stat');
+        var alreadyOpen = card.classList.contains('is-selected');
+
+        statCardEls.forEach(function (c) { c.classList.remove('is-selected'); });
+
+        if (alreadyOpen) {
+          statDetailPanel.classList.remove('is-open');
+          return;
+        }
+
+        card.classList.add('is-selected');
+        statDetailSources.forEach(function (src) {
+          if (src.getAttribute('data-stat') === stat) {
+            statDetailPanel.innerHTML = src.innerHTML;
+          }
+        });
+        statDetailPanel.classList.add('is-open');
+      });
+    });
+
     // Interactive pipeline flow diagram
     var stageNodes = document.querySelectorAll('.flow-node.flow-stage');
     var detailSources = document.querySelectorAll('.flow-detail-source');
