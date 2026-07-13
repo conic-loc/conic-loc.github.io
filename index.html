@@ -561,6 +561,7 @@
           <p>A YOLO-based detector localizes the two circular landmarks, followed by ellipse fitting to recover each
           conic's image-plane parameters. In parallel, an LSD line detector extracts candidate line segments for the
           Manhattan-world stage.</p>
+          <div class="flow-image-placeholder">Example detection result &mdash; coming soon</div>
         </div>
         <div class="flow-detail-source" data-stage="2" hidden>
           <h4>2&nbsp;&middot;&nbsp;P2C Solver with Manhattan-World Line Optimization</h4>
@@ -569,12 +570,14 @@
           lie on the same rigid panel, the two-fold P2C ambiguity is resolved by selecting the solution pair whose
           normals align most strongly. The recovered dominant plane then anchors a RANSAC-based Manhattan-world line
           optimization that refines the camera rotation for drift-free, noise-robust orientation.</p>
+          <div class="flow-image-placeholder">Example P2C geometry &mdash; coming soon</div>
         </div>
         <div class="flow-detail-source" data-stage="3" hidden>
           <h4>3&nbsp;&middot;&nbsp;Conic Bundle Adjustment (CBA)</h4>
           <p>All per-frame poses are jointly refined by minimizing algebraic conic residuals &mdash; whether reprojected
           3D circle points satisfy the detected ellipse's implicit quadratic equation &mdash; via Levenberg&ndash;Marquardt,
           enforcing global geometric consistency without explicit point-to-point correspondences.</p>
+          <div class="flow-image-placeholder">Example bundle-adjusted trajectory &mdash; coming soon</div>
         </div>
         <div class="flow-detail-source" data-stage="4" hidden>
           <h4>4&nbsp;&middot;&nbsp;6-DoF Camera Pose</h4>
@@ -813,12 +816,12 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-    <pre><code>@article{anonymous2026conicloc,
-  title   = {ConicLoc: Geometry-Driven Monocular Localization via Perspective-Two-Circle with Structural Conic Priors},
-  author  = {Anonymous Author(s)},
-  journal = {IEEE Robotics and Automation Letters (RA-L)},
-  year    = {2026},
-  note    = {Under double-blind review}
+    <pre><code>@article{conicloc,
+  title   = {},
+  author  = {},
+  journal = {},
+  year    = {},
+  note    = {Under double-blind review &mdash; citation to be finalized upon acceptance}
 }</code></pre>
   </div>
 </section>
