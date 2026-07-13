@@ -1,0 +1,276 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="ConicLoc: Map-Free Monocular Localization via Perspective-Two-Circle for Free-Flying Robots">
+  <meta name="keywords" content="Space Robotics, Astrobee, ISS, Digital Twin, 3-DoF Visual Compass, Rotation Estimation, ">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ConicLoc:  <br> Geometry-Driven Monocular Localization  <br> via Perspective-Two-Circle with Structural Conic Priors</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src=""></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-LYK5B1RWXZ');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/thumbnail.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    .no-wrap {
+    white-space: nowrap; /* Prevents wrapping for the second line */
+    }
+    .publication-title {
+      max-width: 1200px; /* 타이틀의 최대 가로 폭을 설정 */
+      font-size: 2.5rem; /* 글자 크기 조정 */
+      margin: 0 auto; /* 가운데 정렬 */
+      line-height: 1.2; /* 줄 간격 설정 */
+    }
+  </style>
+  <style>
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      background: #000;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+              ConicLoc: Geometry-Driven Monocular Localization <br> via Perspective-Two-Circle with Structural Conic Priors
+          </h1>
+
+          <div class="is-size-4 publication-authors">
+            <span class="author-block">RA-L </span>
+          </div>
+
+          <div class="is-size-4 publication-authors">
+            <span class="author-block">Anonymous<sup>1*</sup>,</span>
+
+          </div>
+
+          <div class="is-size-5 publication-affiliations">
+
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="./static/paper2.pdf"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code </span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-2">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+           We present ConicLoc, a monocular visual localization (VL) that leverages time-invariant, known-radius circular landmarks in structured environments to estimate six-DoF camera poses without a pre-built map.
+Existing map-based VL methods depend on handcrafted keypoints, semantic cues, or pre-built maps, making them vulnerable to illumination/appearance changes and frequent environmental reconfigurations.
+ConicLoc exploits circular structures' known radii as a compact metric prior together with Manhattan world (MW) regularities, requiring no depth sensing, learned descriptors, or a pre-built map.
+We first propose a Perspective-Two-Circle (P2C) solver that recovers a metric-scale initial pose from two detected ellipses with known radii.
+From P2C's conic normals, we infer dominant MW directions and integrate MW-aligned lines for drift-free orientation and low sensitivity to image noise.
+All poses are further refined via a conic bundle adjustment (CBA) minimizing algebraic conic residuals for global consistency.
+We evaluate ConicLoc on synthetic and real-world environments, including ISS free-flying robot sequences and nano-drone sequences under day-night illumination change.
+Without a pre-built map, ConicLoc achieves accuracy comparable to map-based VL methods while maintaining performance across severe illumination changes.
+           </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+
+
+
+<!-- ===================== ConicLoc Results Section ===================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-2">ConicLoc Results</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            We evaluate <strong>ConicLoc</strong> on real Astrobee sequences and synthetic data.
+            Our method achieves accurate 6-DoF localization using 
+            <strong>two circular structures</strong> (hatch and window) 
+            together with <strong>Manhattan World line constraints</strong>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional Result Video -->
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+
+        <video autoplay muted loop playsinline 
+               style="max-width: 100%; height: auto;">
+          <source src="./static/astrobee.mp4" type="video/mp4">
+        </video>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+  
+  
+<!-- ===================== Pipeline Section ===================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Title -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-2">Pipeline</h2>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            The ConicLoc pipeline estimates 6-DoF camera pose using 
+            <strong>two circular structures</strong> (hatch and window) 
+            together with <strong>Manhattan World line constraints</strong>.
+          </p>
+
+          <p>
+            Given detected ellipses and structural line segments in the image, 
+            we recover the geometric relationship between projected conics and 
+            their corresponding 3D circles. The Manhattan constraints provide 
+            additional orientation regularization, improving robustness under 
+            centroid, axis, and angle noise.
+          </p>
+
+          <p>
+            The final pose is refined through nonlinear optimization using 
+            conic reprojection residuals and line alignment constraints.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video -->
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+        <video autoplay muted loop playsinline
+               style="pointer-events: none; max-width: 100%; height: auto;">
+          <source src="./static/pipeline.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/jungilha/SanFranciscoWorld.github.io" class="external-link">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p style="text-align: center">
+            Thanks <a href="https://nerfies.github.io/">Nerfies</a> for sharing the page template.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
